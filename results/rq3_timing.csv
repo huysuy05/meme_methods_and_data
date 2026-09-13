@@ -1,0 +1,14 @@
+model,feature,images,hours_per_seed,images_per_hour
+DenseNet-121,raw image,152509,0.62,245982
+ResNet-18,raw image,152509,0.43,354672
+EfficientNetV2-S,raw image,152509,0.74,206093
+Two-stage DenseNet-121,raw image,152509,2.29,66598
+MLR,colour+texture histograms,152509,2.36,64622
+rNN,pHash,152509,0.24,635454
+rNN,DenseNet embedding,152509,0.29,525893
+rNN,ORB feature matching,152509,41.12,3709
+Sparse Matching,raw image,152509,20.57,7414
+DBSCAN (Zannettou et al.),pHash,1239837,0.4,3099592
+UMAP+HDBSCAN,pHash,1239837,1.98,626180
+UMAP+HDBSCAN,CLIP embedding,1239837,1.63,760636
+PCA+HDBSCAN (ours),fused SigLIP2 + DINOv2,1239837,2.97,417454

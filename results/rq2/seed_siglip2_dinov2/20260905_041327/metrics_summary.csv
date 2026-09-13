@@ -1,0 +1,2 @@
+run_dir,seed,ssft_enabled,loaded_existing_ssft,cluster_method,reducer,alpha,train_images,test_images,discovery_images_total,discovered_cluster_count,mapped_cluster_count,accuracy,precision,recall,f1,mcc,cohen_kappa,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/open_setting_predictions/seed_siglip2_dinov2/20260905_041327,40,False,False,hdbscan,pca,0.55,142007,30502,1241342,2924,2924,0.939774441020261,0.9260987296676313,0.939774441020261,0.9289298598920283,0.9397423831735653,0.939710680943622,7680.753,128.013

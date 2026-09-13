@@ -1,0 +1,71 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/runs/meme_research_rnn_densenet_embedding_eval",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "batch_size": 64,
+    "num_workers": 12,
+    "radius_values": [
+      0.1,
+      0.15,
+      0.18,
+      0.2,
+      0.22,
+      0.25,
+      0.3
+    ],
+    "weights": [
+      "uniform",
+      "distance"
+    ],
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null,
+    "cnn_checkpoint": "/path/to/meme-template-id/results/runs/meme_research_cnn_eval/densenet121/20260818_170124_batch/seed_40/best_model.pt",
+    "radius_selection": "val_f1"
+  },
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 122007,
+    "val_images": 12201,
+    "test_images": 30502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "selection": {
+    "best_radius": 0.18,
+    "best_weights": "distance",
+    "best_val_f1": 0.9720092709595822,
+    "best_val_coverage": 0.9742644045570035,
+    "radius_selection": "val_f1"
+  },
+  "test_metrics": {
+    "accuracy": 0.966526785128844,
+    "precision": 0.9864859757068295,
+    "recall": 0.966526785128844,
+    "f1": 0.9736825542958903,
+    "mcc": 0.9667585862804474,
+    "cohen_kappa": 0.9664922727519358,
+    "coverage": 0.9766900531112714,
+    "covered_accuracy": 0.9895941727367326,
+    "covered_count": 29791,
+    "rejected_count": 711
+  },
+  "timing": {
+    "started_at": "2026-08-21T20:04:49+00:00",
+    "finished_at": "2026-08-21T20:18:01+00:00",
+    "duration_seconds": 792.259,
+    "duration_minutes": 13.204
+  }
+}

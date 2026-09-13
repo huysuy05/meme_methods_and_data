@@ -1,0 +1,96 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/runs/meme_research_cnn_eval/densenet121",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "batch_size": 32,
+    "eval_batch_size": 64,
+    "num_workers": 12,
+    "model_name": "densenet121",
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0,
+    "epochs": 10,
+    "patience": 2,
+    "freeze_backbone": true,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null
+  },
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 109806,
+    "val_images": 12201,
+    "test_images": 30502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "training": {
+    "reused_checkpoint": false,
+    "checkpoint_source": null,
+    "best_epoch": 3,
+    "best_val_loss": 0.5396307907642917,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.677934637927898,
+        "val_loss": 0.699953227127138,
+        "val_accuracy": 0.9454962707974757,
+        "val_f1": 0.9431442246773355
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.292676291225147,
+        "val_loss": 0.6447107410057101,
+        "val_accuracy": 0.9663142365379886,
+        "val_f1": 0.9657890459151046
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.27043348356639285,
+        "val_loss": 0.5396307907642917,
+        "val_accuracy": 0.9742644045570035,
+        "val_f1": 0.9728762110626973
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.24966627778254108,
+        "val_loss": 0.5955484491614494,
+        "val_accuracy": 0.975411851487583,
+        "val_f1": 0.9743286886129091
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.223734582402131,
+        "val_loss": 0.6259529666653374,
+        "val_accuracy": 0.9777067453487419,
+        "val_f1": 0.977623273019272
+      }
+    ]
+  },
+  "test_metrics": {
+    "accuracy": 0.9720346206806111,
+    "precision": 0.9773009370342731,
+    "recall": 0.9720346206806111,
+    "f1": 0.9717782607767266,
+    "mcc": 0.9720129337225493,
+    "cohen_kappa": 0.9720051723289436,
+    "test_loss": 0.6339382264672988
+  },
+  "timing": {
+    "started_at": "2026-08-18T15:01:24+00:00",
+    "finished_at": "2026-08-18T15:35:18+00:00",
+    "duration_seconds": 2033.841,
+    "duration_minutes": 33.897
+  }
+}

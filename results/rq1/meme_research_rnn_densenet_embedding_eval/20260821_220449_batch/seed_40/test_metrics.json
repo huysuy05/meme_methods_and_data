@@ -1,0 +1,20 @@
+{
+  "test_metrics": {
+    "accuracy": 0.966526785128844,
+    "precision": 0.9864859757068295,
+    "recall": 0.966526785128844,
+    "f1": 0.9736825542958903,
+    "mcc": 0.9667585862804474,
+    "cohen_kappa": 0.9664922727519358,
+    "coverage": 0.9766900531112714,
+    "covered_accuracy": 0.9895941727367326,
+    "covered_count": 29791,
+    "rejected_count": 711
+  },
+  "timing": {
+    "started_at": "2026-08-21T20:04:49+00:00",
+    "finished_at": "2026-08-21T20:18:01+00:00",
+    "duration_seconds": 792.259,
+    "duration_minutes": 13.204
+  }
+}

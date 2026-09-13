@@ -1,0 +1,2 @@
+run_dir,seed,ssft_enabled,cluster_method,reducer,alpha,discovery_images_total,discovered_cluster_count,mapped_cluster_count,accuracy,precision,recall,f1,mcc,cohen_kappa,duration_seconds,duration_minutes
+/path/to/meme-template-id/SEED/uns_runs/seed_unsupervised_eval_allsocial/20260902_051333_batch/seed_42,42,False,hdbscan,pca,0.55,1239837,7319,2398,0.9395449478722707,0.921807990314079,0.9395449478722707,0.9269013914799338,0.9395033148138329,0.9394805780922653,7572.368,126.206

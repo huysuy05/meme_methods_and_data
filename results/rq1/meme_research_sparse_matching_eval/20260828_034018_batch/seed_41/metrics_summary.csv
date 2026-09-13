@@ -1,0 +1,2 @@
+run_dir,seed,accuracy,precision,recall,f1,mcc,cohen_kappa,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/runs/meme_research_sparse_matching_eval/20260828_034018_batch/seed_41,41,0.6904793128319454,0.846207853678882,0.6904793128319454,0.7191905424102983,0.705137013494945,0.6901913649453166,59507.761,991.796

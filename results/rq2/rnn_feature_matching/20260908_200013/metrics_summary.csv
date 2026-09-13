@@ -1,0 +1,2 @@
+run_dir,seed,accuracy,precision,recall,f1,mcc,cohen_kappa,coverage,covered_accuracy,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/open_setting_predictions/rnn_feature_matching/20260908_200013,40,0.895,0.915,0.895,0.9016666666666666,0.8976661273141869,0.8944591029023746,0.92,0.9728260869565217,27804.985,463.416

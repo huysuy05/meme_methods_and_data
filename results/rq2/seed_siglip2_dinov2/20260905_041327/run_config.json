@@ -1,0 +1,111 @@
+{
+  "config": {
+    "imgflip_root": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "output_dir": "/path/to/meme-template-id/results/open_setting_predictions/seed_siglip2_dinov2",
+    "train_size": 0.8,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "batch_size": 128,
+    "num_workers": 6,
+    "siglip_model_id": "google/siglip2-base-patch16-224",
+    "dino_model_id": "facebook/dinov2-base",
+    "alpha": 0.55,
+    "reducer": "pca",
+    "reducer_dim": 128,
+    "cluster_method": "hdbscan",
+    "kmeans_clusters": null,
+    "refinement_steps": 1,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "max_unlabeled_images": null,
+    "discovery_extra_roots": [
+      "/path/to/meme-template-id/Social_Media/Facebook2023_nolabel",
+      "/path/to/meme-template-id/Social_Media/Reddit2024_nolabel/images",
+      "/path/to/meme-template-id/Social_Media/Twitter2023_nolabel"
+    ],
+    "max_corpus_images": null,
+    "use_ssft": false,
+    "ssft_checkpoint_dir": null,
+    "ssft_epochs": 2,
+    "ssft_lr": 1e-05,
+    "ssft_weight_decay": 0.0001,
+    "ssft_temperature": 0.1,
+    "ssft_projection_dim": 256,
+    "ssft_objective": "ntxent",
+    "ssft_deepcluster_clusters": null,
+    "ssft_early_stopping_patience": 2,
+    "ssft_early_stopping_min_delta": 0.0001,
+    "ssft_val_size": 0.1,
+    "amp_dtype": "bf16",
+    "encode_dtype": "fp32",
+    "io_workers": 16,
+    "open_set_dir": "/path/to/meme-template-id/Social_Media/random_sampled",
+    "open_set_reject_label": "Template-Free",
+    "open_set_labels": null,
+    "non_meme_root": "/path/to/meme-template-id/non_memes",
+    "max_non_meme_images": 20000,
+    "device": "cuda"
+  },
+  "non_meme_class": {
+    "non_meme_images": 20000,
+    "non_meme_train": 20000,
+    "non_meme_test": 0
+  },
+  "cluster_examples": {
+    "clusters": 7343,
+    "named_clusters": 2924,
+    "unnamed_clusters": 4419,
+    "examples_per_cluster": 6,
+    "file": "/path/to/meme-template-id/results/open_setting_predictions/seed_siglip2_dinov2/20260905_041327/cluster_examples.csv"
+  },
+  "dataset": {
+    "imgflip_images_total_after_filtering": 152509,
+    "imgflip_classes_after_filtering": 1704,
+    "imgflip_train_images": 142007,
+    "imgflip_test_images": 30502,
+    "unlabeled_images_in_discovery": 0,
+    "unlabeled_corpus_images": 1099352,
+    "discovery_images_total": 1241342,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "clustering": {
+    "cluster_method": "hdbscan",
+    "requested_kmeans_clusters": 1705,
+    "discovered_cluster_count": 7343,
+    "labeled_cluster_count": 2924,
+    "mapped_cluster_count": 2924,
+    "unknown_cluster_predictions": 0
+  },
+  "ssft": {
+    "enabled": false,
+    "loaded_existing": false
+  },
+  "test_metrics": {
+    "accuracy": 0.939774441020261,
+    "precision": 0.9260987296676313,
+    "recall": 0.939774441020261,
+    "f1": 0.9289298598920283,
+    "mcc": 0.9397423831735653,
+    "cohen_kappa": 0.939710680943622
+  },
+  "open_set": {
+    "images": 1000,
+    "predictions_file": "/path/to/meme-template-id/results/open_setting_predictions/seed_siglip2_dinov2/20260905_041327/open_set_predictions.csv",
+    "class_counts": {
+      "Template-Free": 382,
+      "Templated-Meme": 355,
+      "Non-Meme": 263
+    },
+    "distinct_templates_predicted": 248
+  },
+  "timing": {
+    "started_at": "2026-09-05T02:13:27+00:00",
+    "finished_at": "2026-09-05T04:21:28+00:00",
+    "duration_seconds": 7680.753,
+    "duration_minutes": 128.013
+  }
+}

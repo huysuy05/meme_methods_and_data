@@ -1,0 +1,89 @@
+{
+  "config": {
+    "imgflip_root": null,
+    "output_dir": "/path/to/meme-template-id/results/open_setting_predictions/bertopic_clip",
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "train_size": 0.8,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "batch_size": 128,
+    "embedding_method": "clip",
+    "clip_model_id": "openai/clip-vit-base-patch32",
+    "reducer_dim": 128,
+    "hdbscan_min_cluster_size": 10,
+    "hdbscan_min_samples": 5,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "seeds": null,
+    "open_set_dir": "/path/to/meme-template-id/Social_Media/random_sampled",
+    "open_set_reject_label": "Template-Free",
+    "open_set_labels": null,
+    "non_meme_root": "/path/to/meme-template-id/non_memes",
+    "max_non_meme_images": 20000,
+    "discovery_extra_roots": [
+      "/path/to/meme-template-id/Social_Media/Facebook2023_nolabel",
+      "/path/to/meme-template-id/Social_Media/Reddit2024_nolabel/images",
+      "/path/to/meme-template-id/Social_Media/Twitter2023_nolabel"
+    ],
+    "max_corpus_images": null,
+    "num_workers": 8,
+    "io_workers": 16,
+    "encode_dtype": "fp32",
+    "device": "cuda"
+  },
+  "non_meme_class": {
+    "non_meme_images": 20000,
+    "non_meme_train": 20000,
+    "non_meme_test": 0
+  },
+  "cluster_examples": {
+    "clusters": 13993,
+    "named_clusters": 4378,
+    "unnamed_clusters": 9615,
+    "examples_per_cluster": 6,
+    "file": "/path/to/meme-template-id/results/open_setting_predictions/bertopic_clip/20260908_203314/cluster_examples.csv"
+  },
+  "dataset": {
+    "imgflip_images_total_after_filtering": 152509,
+    "imgflip_classes_after_filtering": 1704,
+    "imgflip_train_images": 142007,
+    "imgflip_test_images": 30502,
+    "unlabeled_corpus_images": 1099335,
+    "discovery_images_total": 1241342,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "clustering": {
+    "cluster_method": "hdbscan",
+    "discovered_cluster_count": 13993,
+    "labeled_cluster_count": 4378,
+    "mapped_cluster_count": 4378,
+    "unknown_cluster_predictions": 0
+  },
+  "test_metrics": {
+    "accuracy": 0.6745131466789063,
+    "precision": 0.6533469271715159,
+    "recall": 0.6745131466789063,
+    "f1": 0.6484352746371448,
+    "mcc": 0.6742937149043849,
+    "cohen_kappa": 0.6741549024153382
+  },
+  "open_set": {
+    "images": 1000,
+    "predictions_file": "/path/to/meme-template-id/results/open_setting_predictions/bertopic_clip/20260908_203314/open_set_predictions.csv",
+    "class_counts": {
+      "Template-Free": 560,
+      "Templated-Meme": 318,
+      "Non-Meme": 122
+    },
+    "distinct_templates_predicted": 222
+  },
+  "timing": {
+    "started_at": "2026-09-08T18:33:14+00:00",
+    "finished_at": "2026-09-08T19:38:30+00:00",
+    "duration_seconds": 3916.62,
+    "duration_minutes": 65.277
+  }
+}

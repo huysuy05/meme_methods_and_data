@@ -1,0 +1,2 @@
+run_dir,seed,binary_stage_used,accuracy,precision,recall,f1,mcc,cohen_kappa,coverage,covered_accuracy,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/runs/meme_research_two_stage_cnn_eval/20260830_182011_batch/seed_41,41,True,0.9340371123205036,0.9777105989046956,0.9340371123205036,0.9496014975282405,0.9351196681349858,0.933970331066261,0.9506261884466592,0.9825493171471927,7357.436,122.624

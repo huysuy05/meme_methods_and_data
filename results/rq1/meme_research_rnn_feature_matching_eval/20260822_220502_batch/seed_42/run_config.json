@@ -1,0 +1,80 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/runs/meme_research_rnn_feature_matching_eval",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 42,
+    "max_refs_per_template": 20,
+    "max_test_images": null,
+    "target_size": 256,
+    "n_keypoints": 512,
+    "fast_threshold": 0.08,
+    "feature_backend": "opencv",
+    "max_match_distance": 27.0,
+    "min_match_values": [
+      20
+    ],
+    "flann_table_number": 6,
+    "flann_key_size": 12,
+    "flann_multi_probe_level": 1,
+    "flann_checks": 50,
+    "radius_values": [
+      0.9,
+      0.93,
+      0.95,
+      0.97,
+      0.99
+    ],
+    "weights": [
+      "uniform",
+      "distance"
+    ],
+    "num_workers": 12,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null
+  },
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 29463,
+    "val_images": 12201,
+    "test_images": 30502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "selection": {
+    "best_min_matches": 20,
+    "max_match_distance": 27.0,
+    "best_radius": 0.97,
+    "best_weights": "distance",
+    "best_val_f1": 0.9170573041937226
+  },
+  "test_metrics": {
+    "accuracy": 0.8800078683365026,
+    "precision": 0.9834684197300952,
+    "recall": 0.8800078683365026,
+    "f1": 0.9160039980248669,
+    "mcc": 0.8844810763434591,
+    "cohen_kappa": 0.8798994644016872,
+    "coverage": 0.8987935217362796,
+    "covered_accuracy": 0.9790990333758891,
+    "covered_count": 27415,
+    "rejected_count": 3087
+  },
+  "timing": {
+    "started_at": "2026-08-26T12:44:57+00:00",
+    "finished_at": "2026-08-27T23:26:36+00:00",
+    "duration_seconds": 124898.851,
+    "duration_minutes": 2081.648
+  }
+}

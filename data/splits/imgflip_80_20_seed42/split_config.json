@@ -1,0 +1,50 @@
+{
+  "output_dir": "/path/to/meme-template-id/splits/imgflip_80_20_seed42",
+  "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/train.parquet",
+  "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/test.parquet",
+  "random_seed": 42,
+  "train_size": 0.8,
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 122007,
+    "test_images": 30502,
+    "explicit_template_exclusions": {
+      "excluded_templates": [
+        "meme_submissions"
+      ],
+      "excluded_images": 146990
+    },
+    "small_class_filtering": {
+      "min_images_required_per_class": 7,
+      "templates_before": 1770,
+      "templates_after": 1704,
+      "templates_removed": 66,
+      "images_before": 152767,
+      "images_after": 152509,
+      "images_removed": 258,
+      "removed_template_examples": {
+        "pepe_the_king_prawn": 6,
+        "skeptical_swardson": 6,
+        "dont_look_at_them_ricky": 6,
+        "a_second_plane_has_just_hit": 6,
+        "priest_tempted_by_girl": 6,
+        "over_your_head": 6,
+        "keep_my_wifes_name_out_of_your_mouth": 6,
+        "babe_its_4pm_time_for_your": 6,
+        "woosh_cat": 6,
+        "beyonc__tiffany_pollard": 6,
+        "brian_wilson_vs_zz_top": 6,
+        "awkward_olympics": 6,
+        "scooby_doo_unmasking": 6,
+        "impressive_very_nice": 5,
+        "honey_wake_up": 5,
+        "you_wouldnt_x_a_y": 5,
+        "hot_caleb": 5,
+        "so_you_agree": 5,
+        "but_it_might_work_for_us": 5,
+        "go_and_get_the_guitar": 5
+      }
+    }
+  }
+}

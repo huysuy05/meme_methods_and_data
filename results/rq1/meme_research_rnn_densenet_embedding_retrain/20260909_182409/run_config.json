@@ -1,0 +1,78 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/runs/meme_research_rnn_densenet_embedding_retrain",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 42,
+    "batch_size": 64,
+    "num_workers": 12,
+    "radius_values": [
+      0.1,
+      0.15,
+      0.18,
+      0.2,
+      0.22,
+      0.25,
+      0.3
+    ],
+    "weights": [
+      "uniform",
+      "distance"
+    ],
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null,
+    "open_set_dir": null,
+    "open_set_reject_label": "Template-Free",
+    "open_set_labels": null,
+    "non_meme_root": null,
+    "max_non_meme_images": null,
+    "cnn_checkpoint": "/path/to/meme-template-id/results/runs/meme_research_cnn_eval_retrain/densenet121/20260909_155145/best_model.pt",
+    "radius_selection": "val_f1"
+  },
+  "non_meme_class": null,
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 122007,
+    "val_images": 12201,
+    "test_images": 30502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "selection": {
+    "best_radius": 0.2,
+    "best_weights": "distance",
+    "best_val_f1": 0.9735102066480267,
+    "best_val_coverage": 0.9834439800016392,
+    "radius_selection": "val_f1"
+  },
+  "test_metrics": {
+    "accuracy": 0.9688217166087469,
+    "precision": 0.9817145770597772,
+    "recall": 0.9688217166087469,
+    "f1": 0.9728110250009304,
+    "mcc": 0.9689347925015739,
+    "cohen_kappa": 0.9687892963534361,
+    "coverage": 0.9828535833715822,
+    "covered_accuracy": 0.9857233396711031,
+    "covered_count": 29979,
+    "rejected_count": 523
+  },
+  "open_set": null,
+  "timing": {
+    "started_at": "2026-09-09T16:24:09+00:00",
+    "finished_at": "2026-09-09T16:43:20+00:00",
+    "duration_seconds": 1151.074,
+    "duration_minutes": 19.185
+  }
+}

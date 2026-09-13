@@ -1,0 +1,84 @@
+{
+  "config": {
+    "imgflip_root": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "output_dir": "/path/to/meme-template-id/SEED/uns_runs/seed_unsupervised_eval_allsocial",
+    "train_size": 0.8,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "batch_size": 128,
+    "num_workers": 6,
+    "siglip_model_id": "google/siglip2-base-patch16-224",
+    "dino_model_id": "facebook/dinov2-base",
+    "alpha": 0.55,
+    "reducer": "pca",
+    "reducer_dim": 128,
+    "cluster_method": "hdbscan",
+    "kmeans_clusters": null,
+    "refinement_steps": 1,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "max_unlabeled_images": null,
+    "discovery_extra_roots": [
+      "/path/to/meme-template-id/Social_Media/Facebook2023_nolabel",
+      "/path/to/meme-template-id/Social_Media/Reddit2024_nolabel/images",
+      "/path/to/meme-template-id/Social_Media/Twitter2023_nolabel"
+    ],
+    "max_corpus_images": null,
+    "use_ssft": false,
+    "ssft_checkpoint_dir": null,
+    "ssft_epochs": 2,
+    "ssft_lr": 1e-05,
+    "ssft_weight_decay": 0.0001,
+    "ssft_temperature": 0.1,
+    "ssft_projection_dim": 256,
+    "ssft_objective": "ntxent",
+    "ssft_deepcluster_clusters": null,
+    "ssft_early_stopping_patience": 2,
+    "ssft_early_stopping_min_delta": 0.0001,
+    "ssft_val_size": 0.1,
+    "amp_dtype": "bf16",
+    "encode_dtype": "fp32",
+    "io_workers": 16,
+    "device": "cuda"
+  },
+  "dataset": {
+    "imgflip_images_total_after_filtering": 152509,
+    "imgflip_classes_after_filtering": 1704,
+    "imgflip_train_images": 122007,
+    "imgflip_test_images": 30502,
+    "unlabeled_images_in_discovery": 0,
+    "unlabeled_corpus_images": 1117847,
+    "discovery_images_total": 1239837,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "clustering": {
+    "cluster_method": "hdbscan",
+    "requested_kmeans_clusters": 1704,
+    "discovered_cluster_count": 7325,
+    "labeled_cluster_count": 2406,
+    "mapped_cluster_count": 2406,
+    "unknown_cluster_predictions": 0
+  },
+  "ssft": {
+    "enabled": false,
+    "loaded_existing": false
+  },
+  "test_metrics": {
+    "accuracy": 0.9395121631368435,
+    "precision": 0.9228219648133771,
+    "recall": 0.9395121631368435,
+    "f1": 0.9273083234560019,
+    "mcc": 0.9394705382342133,
+    "cohen_kappa": 0.9394478084216127
+  },
+  "timing": {
+    "started_at": "2026-09-02T03:13:33+00:00",
+    "finished_at": "2026-09-02T07:37:51+00:00",
+    "duration_seconds": 15857.341,
+    "duration_minutes": 264.289
+  }
+}

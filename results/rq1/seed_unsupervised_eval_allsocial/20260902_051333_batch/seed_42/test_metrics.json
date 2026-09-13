@@ -1,0 +1,24 @@
+{
+  "test_metrics": {
+    "accuracy": 0.9395449478722707,
+    "precision": 0.921807990314079,
+    "recall": 0.9395449478722707,
+    "f1": 0.9269013914799338,
+    "mcc": 0.9395033148138329,
+    "cohen_kappa": 0.9394805780922653
+  },
+  "ssft": {
+    "enabled": false,
+    "loaded_existing": false
+  },
+  "run_dir": "/path/to/meme-template-id/SEED/uns_runs/seed_unsupervised_eval_allsocial/20260902_190725",
+  "cluster_method": "hdbscan",
+  "reducer": "pca",
+  "alpha": 0.55,
+  "timing": {
+    "started_at": "2026-09-02T17:07:25+00:00",
+    "finished_at": "2026-09-02T19:13:37+00:00",
+    "duration_seconds": 7572.368,
+    "duration_minutes": 126.206
+  }
+}

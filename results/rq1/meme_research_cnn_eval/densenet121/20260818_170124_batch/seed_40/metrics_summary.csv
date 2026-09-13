@@ -1,0 +1,2 @@
+run_dir,seed,model_name,reused_checkpoint,accuracy,precision,recall,f1,mcc,cohen_kappa,test_loss,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/runs/meme_research_cnn_eval/densenet121/20260818_170124_batch/seed_40,40,densenet121,False,0.9720346206806111,0.9773009370342731,0.9720346206806111,0.9717782607767266,0.9720129337225493,0.9720051723289436,0.6339382264672988,2033.841,33.897

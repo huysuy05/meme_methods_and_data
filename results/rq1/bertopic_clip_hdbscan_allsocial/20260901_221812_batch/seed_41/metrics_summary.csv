@@ -1,0 +1,2 @@
+run_dir,seed,embedding_method,accuracy,precision,recall,f1,mcc,cohen_kappa,discovered_cluster_count,mapped_cluster_count,duration_seconds,duration_minutes
+/path/to/meme-template-id/SEED/uns_runs/bertopic_clip_hdbscan_allsocial/20260901_221812_batch/seed_41,41,clip,0.6756606124188578,0.6516896282181548,0.6756606124188578,0.6463778442498445,0.6754380062037052,0.6752976880340541,13440,3938,3587.86,59.798

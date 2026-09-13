@@ -1,0 +1,40 @@
+# Core dependencies, derived from an AST scan of every released Python file and pinned
+# against the exact environment the reported results were produced in (Python 3.12).
+#
+# CPU install:
+#     pip install -r requirements.txt
+#
+# GPU install: see requirements-gpu.txt. The clustering pipelines require CUDA and will
+# refuse to start on a CPU-only machine, see the README section "What needs a GPU".
+#
+# The annotation tool needs none of this. code/annotation/annotate.py and
+# build_ground_truth.py are standard library only and run on a bare Python 3.10 or newer.
+
+numpy==2.4.6
+pandas==2.3.3
+pyarrow==23.0.1          # required by pandas.read_parquet for data/splits/
+scipy==1.18.0
+scikit-learn==1.9.0
+scikit-image==0.26.0
+pillow==12.3.0
+opencv-python==5.0.0.93
+torch==2.13.0
+torchvision==0.28.0
+transformers==5.14.1
+tqdm==4.70.0
+requests==2.34.2
+
+# Notes
+#
+# opencv-python is used by one file only, code/methods/meme_research_rnn_feature_matching_eval.py,
+# for ORB keypoint detection and matching. On a headless server you may prefer
+# opencv-python-headless; we do not pin a version for it because it was not in the
+# environment used for the paper.
+#
+# transformers is needed only by seed_unsupervised_eval.py and
+# bertopic_clip_phash_hdbscan_eval.py, which load SigLIP 2, DINOv2 and CLIP checkpoints
+# from the HuggingFace hub.
+#
+# bertopic, hdbscan and umap-learn are NOT dependencies despite the file name
+# bertopic_clip_phash_hdbscan_eval.py and the --reducer umap / --cluster-method hdbscan
+# flags. Those algorithms are reached through cuML. Do not install them.

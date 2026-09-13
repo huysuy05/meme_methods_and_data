@@ -1,0 +1,12 @@
+model,feature,overall_f1,overall_kappa,overall_mcc,pred_templated_f1,pred_templated_kappa,pred_templated_mcc,true_templated_f1,true_templated_kappa,true_templated_mcc,binary_recall,binary_precision
+rNN,pHash,0.537,0.273,0.292,0.334,0.345,0.379,0.497,0.478,0.523,0.587,0.424
+rNN,DenseNet embedding,0.635,0.432,0.45,0.408,0.42,0.458,0.793,0.77,0.779,0.847,0.462
+rNN,ORB feature matching,0.468,0.227,0.274,0.393,0.399,0.441,0.508,0.479,0.526,0.598,0.498
+Two-stage DenseNet-121,raw image,0.278,0.214,0.307,0.208,0.222,0.289,0.737,0.722,0.73,0.868,0.266
+DenseNet-121,raw image,0.331,0.233,0.303,0.337,0.349,0.408,0.759,0.744,0.754,0.825,0.388
+Sparse Matching,raw image,0.123,0.033,0.109,0.06,0.06,0.079,0.322,0.299,0.308,0.979,0.195
+UMAP+HDBSCAN,pHash,0.488,0.183,0.19,0.291,0.303,0.343,0.463,0.437,0.479,0.54,0.374
+UMAP+HDBSCAN,CLIP embedding,0.608,0.373,0.388,0.287,0.303,0.343,0.528,0.51,0.525,0.762,0.453
+DBSCAN (Zannettou et al.),pHash,0.426,0.116,0.129,0.158,0.165,0.192,0.259,0.247,0.293,0.444,0.296
+PCA+HDBSCAN (ours),fused SigLIP2 + DINOv2,0.64,0.452,0.468,0.434,0.446,0.499,0.854,0.84,0.842,0.905,0.482
+GPT-5.6 Luna,raw image + template inventory,0.813,0.694,0.718,0.859,0.854,0.859,0.859,0.84,0.847,0.878,0.892

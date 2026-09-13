@@ -1,0 +1,107 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/runs/meme_research_cnn_eval_retrain/densenet121",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 42,
+    "batch_size": 32,
+    "eval_batch_size": 64,
+    "num_workers": 12,
+    "model_name": "densenet121",
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0,
+    "epochs": 10,
+    "patience": 2,
+    "freeze_backbone": true,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null,
+    "checkpoint_dir": null,
+    "open_set_dir": null,
+    "open_set_reject_label": "Template-Free",
+    "open_set_labels": null,
+    "non_meme_root": null,
+    "template_confidence_percentile": null,
+    "template_confidence_threshold": null,
+    "max_non_meme_images": null
+  },
+  "non_meme_class": null,
+  "template_confidence": {},
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 109806,
+    "val_images": 12201,
+    "test_images": 30502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "training": {
+    "reused_checkpoint": false,
+    "checkpoint_source": null,
+    "best_epoch": 3,
+    "best_val_loss": 0.5639728083965971,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.688359839158913,
+        "val_loss": 0.6912753686926041,
+        "val_accuracy": 0.9462339152528482,
+        "val_f1": 0.9451155951808667
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.30368670595313757,
+        "val_loss": 0.6160154822540077,
+        "val_accuracy": 0.9666420785181542,
+        "val_f1": 0.9658898659182801
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.25156745580968387,
+        "val_loss": 0.5639728083965971,
+        "val_accuracy": 0.9759036144578314,
+        "val_f1": 0.9742252494382445
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.23318800667992717,
+        "val_loss": 0.597018462373874,
+        "val_accuracy": 0.9763953774280797,
+        "val_f1": 0.9747208442562889
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.2382995911716947,
+        "val_loss": 0.5808984532278412,
+        "val_accuracy": 0.9784443898041144,
+        "val_f1": 0.9777068230656909
+      }
+    ]
+  },
+  "test_metrics": {
+    "accuracy": 0.9752475247524752,
+    "precision": 0.9788080001874347,
+    "recall": 0.9752475247524752,
+    "f1": 0.9744156008865388,
+    "mcc": 0.9752282988926213,
+    "cohen_kappa": 0.9752215402241085,
+    "test_loss": 0.5967708021622198
+  },
+  "open_set": null,
+  "timing": {
+    "started_at": "2026-09-09T13:51:45+00:00",
+    "finished_at": "2026-09-09T14:31:17+00:00",
+    "duration_seconds": 2372.733,
+    "duration_minutes": 39.546
+  }
+}

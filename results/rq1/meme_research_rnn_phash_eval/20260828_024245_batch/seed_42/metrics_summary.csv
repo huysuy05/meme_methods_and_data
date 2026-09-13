@@ -1,0 +1,2 @@
+run_dir,seed,accuracy,precision,recall,f1,mcc,cohen_kappa,coverage,covered_accuracy,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/runs/meme_research_rnn_phash_eval/20260828_024245_batch/seed_42,42,0.9398072257556882,0.9785329543248054,0.9398072257556882,0.9545275626501302,0.9405957495416577,0.9397465011724906,0.9576749065635041,0.9813426448940468,825.961,13.766

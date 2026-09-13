@@ -1,0 +1,2 @@
+run_dir,seed,model_name,reused_checkpoint,accuracy,precision,recall,f1,mcc,cohen_kappa,test_loss,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/runs/meme_research_cnn_eval/resnet18/20260818_193649_batch/seed_40,40,resnet18,False,0.9713461412366402,0.971221248986925,0.9713461412366402,0.9690780776447387,0.9713206011695145,0.9713157579325045,0.15050240568648118,1002.963,16.716

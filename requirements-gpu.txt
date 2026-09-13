@@ -1,0 +1,30 @@
+# GPU environment used to produce the reported results.
+#
+#     pip install -r requirements-gpu.txt \
+#         --extra-index-url https://download.pytorch.org/whl/cu130 \
+#         --extra-index-url https://pypi.nvidia.com
+#
+# This installs the CUDA 13 builds of PyTorch and the RAPIDS cuML stack. Everything in
+# requirements.txt is included here with the same pins; install this file instead of
+# that one, not in addition to it.
+
+numpy==2.4.6
+pandas==2.3.3
+pyarrow==23.0.1          # required by pandas.read_parquet for data/splits/
+scipy==1.18.0
+scikit-learn==1.9.0
+scikit-image==0.26.0
+pillow==12.3.0
+opencv-python==5.0.0.93
+torch==2.13.0+cu130
+torchvision==0.28.0+cu130
+transformers==5.14.1
+tqdm==4.70.0
+requests==2.34.2
+
+# RAPIDS cuML supplies the GPU PCA, UMAP, HDBSCAN and KMeans implementations used by the
+# clustering pipelines. It is imported inside a try/except in code/methods/gpu_backend.py,
+# so the package is optional at import time, but the clustering runs cannot proceed
+# without it. cupy is pulled in automatically as a dependency and is not listed here
+# because no released file imports it directly.
+cuml-cu13==26.6.0

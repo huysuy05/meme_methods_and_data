@@ -1,0 +1,165 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed42/test.parquet",
+    "image_root": null,
+    "negative_root": "/path/to/meme-template-id/non_memes",
+    "output_dir": "/path/to/meme-template-id/results/runs/meme_research_two_stage_cnn_eval",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 42,
+    "batch_size": 32,
+    "eval_batch_size": 64,
+    "num_workers": 12,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0,
+    "epochs": 10,
+    "patience": 2,
+    "freeze_backbone": true,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null
+  },
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 109806,
+    "val_images": 12201,
+    "test_images": 30502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "stage1_binary": {
+    "used": true,
+    "threshold": 0.42919138073921204,
+    "best_gmean": 0.9423675592885264,
+    "threshold_sweep_csv": "/path/to/meme-template-id/results/runs/meme_research_two_stage_cnn_eval/20260830_182011_batch/seed_42/val_threshold_sweep.csv",
+    "history": [
+      {
+        "epoch": 1.0,
+        "train_loss": 0.265479495160968,
+        "val_loss": 0.18399419140996792
+      },
+      {
+        "epoch": 2.0,
+        "train_loss": 0.20322257785103542,
+        "val_loss": 0.17064431906000022
+      },
+      {
+        "epoch": 3.0,
+        "train_loss": 0.19225472374899033,
+        "val_loss": 0.16170900696340162
+      },
+      {
+        "epoch": 4.0,
+        "train_loss": 0.18723516619103914,
+        "val_loss": 0.1656205590697679
+      },
+      {
+        "epoch": 5.0,
+        "train_loss": 0.18478305972067557,
+        "val_loss": 0.15913581417751493
+      },
+      {
+        "epoch": 6.0,
+        "train_loss": 0.18288744656534278,
+        "val_loss": 0.15556788744032876
+      },
+      {
+        "epoch": 7.0,
+        "train_loss": 0.18070600497399703,
+        "val_loss": 0.1548976696403996
+      },
+      {
+        "epoch": 8.0,
+        "train_loss": 0.17853124685615357,
+        "val_loss": 0.1553393869855149
+      },
+      {
+        "epoch": 9.0,
+        "train_loss": 0.1789568167998966,
+        "val_loss": 0.15652141722960097
+      }
+    ]
+  },
+  "stage2_multiclass": {
+    "best_epoch": 10,
+    "best_val_loss": 0.09662328941755027,
+    "history": [
+      {
+        "epoch": 1.0,
+        "train_loss": 2.805361742315693,
+        "val_loss": 1.2047902221963422
+      },
+      {
+        "epoch": 2.0,
+        "train_loss": 0.4616646249360005,
+        "val_loss": 0.5586061345760026
+      },
+      {
+        "epoch": 3.0,
+        "train_loss": 0.19246378491650604,
+        "val_loss": 0.2870900307451249
+      },
+      {
+        "epoch": 4.0,
+        "train_loss": 0.1113408961328466,
+        "val_loss": 0.19462063936178492
+      },
+      {
+        "epoch": 5.0,
+        "train_loss": 0.07664988694111587,
+        "val_loss": 0.1528890354180373
+      },
+      {
+        "epoch": 6.0,
+        "train_loss": 0.05831598426568301,
+        "val_loss": 0.13305582676829983
+      },
+      {
+        "epoch": 7.0,
+        "train_loss": 0.04679254014322855,
+        "val_loss": 0.12134136067810689
+      },
+      {
+        "epoch": 8.0,
+        "train_loss": 0.0385763804415167,
+        "val_loss": 0.1111478887955758
+      },
+      {
+        "epoch": 9.0,
+        "train_loss": 0.032878068074669635,
+        "val_loss": 0.10234341533904524
+      },
+      {
+        "epoch": 10.0,
+        "train_loss": 0.030185981739650383,
+        "val_loss": 0.09662328941755027
+      }
+    ]
+  },
+  "test_metrics": {
+    "accuracy": 0.9275785194413481,
+    "precision": 0.9771379632997802,
+    "recall": 0.9275785194413481,
+    "f1": 0.944961324871986,
+    "mcc": 0.9289416563155714,
+    "cohen_kappa": 0.9275057031806873,
+    "coverage": 0.9446265818634844,
+    "covered_accuracy": 0.9819525908444106,
+    "covered_count": 28813,
+    "rejected_count": 1689
+  },
+  "timing": {
+    "started_at": "2026-08-30T20:39:17+00:00",
+    "finished_at": "2026-08-30T23:11:59+00:00",
+    "duration_seconds": 9161.943,
+    "duration_minutes": 152.699
+  }
+}

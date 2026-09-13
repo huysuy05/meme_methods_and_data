@@ -1,0 +1,2 @@
+run_dir,seed,accuracy,precision,recall,f1,mcc,cohen_kappa,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/open_setting_predictions/sparse_matching/20260908_185853,40,0.725,0.7151388888888889,0.725,0.7169369369369369,0.7358685708132897,0.7237430307900949,3668.279,61.138

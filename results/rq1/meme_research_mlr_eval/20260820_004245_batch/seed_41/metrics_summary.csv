@@ -1,0 +1,2 @@
+run_dir,seed,accuracy,precision,recall,f1,mcc,cohen_kappa,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/runs/meme_research_mlr_eval/20260820_004245_batch/seed_41,41,0.9692479181693003,0.9751406728783573,0.9692479181693003,0.9708054396476785,0.9692183840976589,0.9692160262171836,6954.524,115.909

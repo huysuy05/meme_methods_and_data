@@ -1,0 +1,48 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/runs/meme_research_sparse_matching_eval",
+    "train_size": 0.8,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "max_refs_per_template": 30,
+    "max_test_images": null,
+    "target_size": 64,
+    "alpha": 0.35,
+    "max_iter": 1000,
+    "num_workers": 12,
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null
+  },
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 122007,
+    "test_images": 30502,
+    "reference_images": 40773,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "test_metrics": {
+    "accuracy": 0.6920201953970232,
+    "precision": 0.8444804092812223,
+    "recall": 0.6920201953970232,
+    "f1": 0.7207375739559053,
+    "mcc": 0.7063425187836031,
+    "cohen_kappa": 0.6917353415342907
+  },
+  "timing": {
+    "started_at": "2026-08-28T01:40:18+00:00",
+    "finished_at": "2026-08-28T23:10:05+00:00",
+    "duration_seconds": 77386.841,
+    "duration_minutes": 1289.781
+  }
+}
