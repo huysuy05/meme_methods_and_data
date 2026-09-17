@@ -5,9 +5,6 @@ settings. It contains the evaluation code for all fourteen methods, the dataset 
 the annotated 1,000-image real-world benchmark, and the metric files behind every reported
 number.
 
-The package is anonymous. Annotators appear as `annotator_1` through `annotator_5`, and no
-author names, institutional identifiers or machine paths are present.
-
 ## Layout
 
 ```
