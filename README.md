@@ -15,6 +15,7 @@ submission/
 ├── code/
 │   ├── methods/            evaluation scripts for all methods, plus shared utilities
 │   ├── annotation/         annotation front end, ground-truth builder, agreement script
+│   ├── analysis/           bootstrap confidence intervals for RQ1 and RQ2
 │   └── data_prep/          split creation, corpus download, templates_root builder
 ├── data/
 │   ├── splits/             the three 80/20 partitions (seeds 40, 41, 42)
@@ -22,7 +23,7 @@ submission/
 │   └── manifests/          the 1,704-template inventory
 └── results/
     ├── rq1_summary.csv     headline closed-set results, one row per method
-    ├── rq2_summary.csv     headline real-world results, one row per method
+    ├── rq2_summary.csv     headline real-world results with bootstrap intervals
     ├── rq3_timing.csv      wall-clock cost and throughput per method
     ├── rq1/                per-run configs and metrics for every closed-set run
     └── rq2/                per-image open-set predictions and metrics
@@ -40,12 +41,22 @@ Not included, and how to obtain each:
 |---|---|---|
 | ImgFlip template images | 152,509 images | Separate dataset release, cited in the paper. `data/manifests/imgflip_templates.csv` lists the 1,704 template folder names and per-split counts, so a copy can be checked against ours. |
 | Social media discovery corpus | 1,117,847 images | **Not redistributable.** The Reddit portion (707,137) can be rebuilt with `code/data_prep/download_reddit_images.py` from a Pushshift-style submissions parquet, which you must supply. We cannot provide an acquisition path for the Facebook (236,371) and Twitter (174,339) portions, so the four clustering rows cannot be reproduced exactly without them. |
-| Non-meme corpus | 138,079 images | Assembled from Flickr8k/20k, a UI-screenshot set and poster downloads. Not redistributable; the composition is described in the paper. |
+| Non-meme corpus | 106,296 distinct images | Assembled from Flickr30k (31,783), a UI-screenshot set (66,261) and poster downloads (8,252). Not redistributable. Note that our copy stores the Flickr portion twice, so it holds 138,079 files but 106,296 distinct images; the duplicate copies were not deduplicated before the 20,000-image training draw. |
 | Model checkpoints | 2.5 GB | Hosted separately. Needed only to rescore without retraining. |
 | Per-image closed-set predictions | 285 MB | Hosted separately. The aggregate metrics they produce are in `results/rq1/`. |
 
 The 1,000 benchmark images **are** included, so RQ2 scoring is fully reproducible from
 this package alone.
+
+### What the benchmark is
+
+A single random draw of 1,000 images from the three social media corpora, 633 from Reddit,
+195 from Facebook and 172 from Twitter. Nothing was injected from the non-meme corpus: the
+non-meme class in the benchmark is whatever the annotators judged to be non-memes among
+genuinely sampled posts, which is 20.7% of the sample. The remainder is 21.0% template-based
+and 58.3% template-free. Sampling excluded any image already drawn, by SHA-256 of the file
+contents rather than by name, because the corpora contain byte-identical duplicates under
+different names.
 
 ## Quickstart
 
@@ -145,8 +156,9 @@ python code/annotation/build_ground_truth.py \
 
 This regenerates the shipped `ground_truth.csv` byte for byte. An annotator's "cannot
 tell" is mapped to template-free, the class of each image is the majority vote, and the
-five images with no majority are resolved from `tie_breaks.csv`, which records the hand
-adjudications separately so the raw annotator files stay untouched.
+five images with no majority are resolved from `tie_breaks.csv`, which records the
+adjudications, made by joint discussion among all five annotators, separately so the raw
+annotator files stay untouched.
 
 ### Inter-annotator agreement
 
@@ -157,6 +169,34 @@ python code/annotation/agreement.py
 Prints the Fleiss kappa reported in the paper (three-class coding, "cannot tell" mapped to
 template-free) together with three alternative codings, so the convention used is explicit
 rather than implied.
+
+### Confidence intervals
+
+Both bootstrap procedures reported in the paper live in `code/analysis/`.
+
+```bash
+cd code/analysis
+
+# RQ2: resamples the 1,000 benchmark images. Needs nothing beyond this package.
+python bootstrap_rq2.py --reference seed_siglip2_dinov2
+
+# RQ1: two-stage, resampling test images within each seed then combining across the three.
+# Needs the separately hosted per-image closed-set predictions.
+python bootstrap_rq1.py --predictions-root /path/to/rq1-predictions
+```
+
+The two research questions use different procedures because they admit different sources of
+variation. RQ1 has three partitions, so its interval combines a within-seed component from
+resampling test images with a between-seed component from the three seed-level means, on
+two degrees of freedom. RQ2 has one partition, and the LLM is queried per image with no
+training split at all, so no between-seed component exists and the interval comes from
+resampling benchmark images alone. The two are not directly comparable and the paper labels
+them separately. RQ3 reports the observed range across seeds rather than an interval,
+because wall-clock time on a shared machine varies with unrelated load.
+
+Both scripts reuse one set of resample indices across methods, so `--reference` yields
+paired intervals on between-method differences, which are considerably tighter than
+comparing two marginal intervals.
 
 ### Running the annotation tool
 
@@ -172,7 +212,7 @@ python code/annotation/annotate.py \
 ```
 
 Note that `--images-root` is `data/rq2_benchmark`, not the `images/` directory inside it,
-because the predictions file already stores paths as `images/sample_NNNN.jpg`.
+because the predictions file already stores paths as `images/<original name>`.
 
 `make_templates_root.py` recreates the per-template example folders the tool shows
 alongside each prediction. It defaults to symlinks; pass `--copy --max-images 5` if your
@@ -237,3 +277,10 @@ blocks containing photographer names, a location, camera serial numbers and plat
 tracking identifiers. These were removed losslessly, so pixel data is unchanged but 343
 files differ byte for byte from their originals. `sample_manifest.csv` records both
 `sha256_source` and `sha256_released` for this reason.
+
+**Images keep their original file names.** Each benchmark image is stored under the name
+it had in its source corpus rather than a sequential identifier, so provenance is visible
+from the file name alone and the set can be cross-referenced against the corpora it was
+drawn from. `sample_manifest.csv` maps each name to its corpus and source platform. Note
+that the `sample_id` column therefore holds an original file name, not a sequential id;
+the column keeps its name because the scoring code joins on it.

@@ -1,0 +1,2 @@
+run_dir,seed,accuracy,precision,recall,f1,mcc,cohen_kappa,coverage,covered_accuracy,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/rq2_final/rnn_densenet_embedding/20260914_154521,40,0.9451625992696076,0.9742435671252349,0.9451625992696076,0.9556029605322809,0.9454197425033642,0.944541855556711,0.96646571213263,0.9779577147998201,931.436,15.524

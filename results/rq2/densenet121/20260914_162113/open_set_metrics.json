@@ -1,0 +1,60 @@
+{
+  "n_images": 1000,
+  "true_class_counts": {
+    "Non-Meme": 207,
+    "Template-Free": 583,
+    "Templated-Meme": 210
+  },
+  "pred_class_counts": {
+    "Non-Meme": 318,
+    "Template-Free": 87,
+    "Templated-Meme": 595
+  },
+  "fine": {
+    "accuracy": 0.324,
+    "precision": 0.6501452274186621,
+    "recall": 0.324,
+    "f1": 0.3442591200176275,
+    "mcc": 0.27991840984037586,
+    "cohen_kappa": 0.2344055430850739
+  },
+  "coarse": {
+    "accuracy": 0.349,
+    "precision": 0.5589640182683353,
+    "recall": 0.349,
+    "f1": 0.28649115416705295,
+    "mcc": 0.1937228027223856,
+    "cohen_kappa": 0.1417304875524552
+  },
+  "binary_templated_vs_rest": {
+    "precision": 0.3126050420168067,
+    "recall": 0.8857142857142857,
+    "f1": 0.462111801242236,
+    "accuracy": 0.567,
+    "n_true_templated": 210,
+    "n_pred_templated": 595
+  },
+  "on_predicted_templated": {
+    "n": 595,
+    "accuracy": 0.27058823529411763,
+    "precision": 0.2528626352501785,
+    "recall": 0.27058823529411763,
+    "f1": 0.25610510871015074,
+    "mcc": 0.3265138198719459,
+    "cohen_kappa": 0.26964544302651827
+  },
+  "on_true_templated": {
+    "n": 210,
+    "accuracy": 0.7666666666666667,
+    "precision": 0.8095238095238095,
+    "recall": 0.7666666666666667,
+    "f1": 0.7806565656565656,
+    "mcc": 0.7687974469900023,
+    "cohen_kappa": 0.76460630461637
+  },
+  "template_accuracy_on_templated": 0.7666666666666667,
+  "labels_file": "/path/to/meme-template-id/data/rq2_benchmark/ground_truth.csv",
+  "labeled_images_without_prediction": 0,
+  "predicted_images_without_label": 0,
+  "ground_truth_templates_never_predicted": 33
+}

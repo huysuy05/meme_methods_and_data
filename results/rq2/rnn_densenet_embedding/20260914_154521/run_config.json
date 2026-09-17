@@ -1,0 +1,91 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/rq2_final/rnn_densenet_embedding",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "batch_size": 64,
+    "num_workers": 12,
+    "radius_values": [
+      0.1,
+      0.15,
+      0.18,
+      0.2,
+      0.22,
+      0.25,
+      0.3
+    ],
+    "weights": [
+      "uniform",
+      "distance"
+    ],
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null,
+    "open_set_dir": "/path/to/meme-template-id/Social_Media/rq2_benchmark_final",
+    "open_set_reject_label": "Template-Free",
+    "open_set_labels": null,
+    "non_meme_root": "/path/to/meme-template-id/non_memes",
+    "max_non_meme_images": 20000,
+    "cnn_checkpoint": "/path/to/meme-template-id/results/runs/meme_research_cnn_eval/densenet121/20260818_170124_batch/seed_40/best_model.pt",
+    "radius_selection": "val_f1"
+  },
+  "non_meme_class": {
+    "non_meme_images": 20000,
+    "non_meme_train": 16000,
+    "non_meme_test": 4000
+  },
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 138007,
+    "val_images": 13801,
+    "test_images": 34502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "selection": {
+    "best_radius": 0.22,
+    "best_weights": "distance",
+    "best_val_f1": 0.9539750369443692,
+    "best_val_coverage": 0.9640605753206289,
+    "radius_selection": "val_f1"
+  },
+  "test_metrics": {
+    "accuracy": 0.9451625992696076,
+    "precision": 0.9742435671252349,
+    "recall": 0.9451625992696076,
+    "f1": 0.9556029605322809,
+    "mcc": 0.9454197425033642,
+    "cohen_kappa": 0.944541855556711,
+    "coverage": 0.96646571213263,
+    "covered_accuracy": 0.9779577147998201,
+    "covered_count": 33345,
+    "rejected_count": 1157
+  },
+  "open_set": {
+    "images": 1000,
+    "predictions_file": "/path/to/meme-template-id/results/rq2_final/rnn_densenet_embedding/20260914_154521/open_set_predictions.csv",
+    "class_counts": {
+      "Template-Free": 554,
+      "Templated-Meme": 384,
+      "Non-Meme": 62
+    },
+    "distinct_templates_predicted": 234
+  },
+  "timing": {
+    "started_at": "2026-09-14T15:45:21+02:00",
+    "finished_at": "2026-09-14T16:00:53+02:00",
+    "duration_seconds": 931.436,
+    "duration_minutes": 15.524
+  }
+}

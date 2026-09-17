@@ -1,0 +1,2 @@
+run_dir,seed,embedding_method,accuracy,precision,recall,f1,mcc,cohen_kappa,discovered_cluster_count,mapped_cluster_count,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/rq2_final/bertopic_clip/20260914_181403,40,clip,0.6770375713067995,0.6559647471100376,0.6770375713067995,0.6521903998190333,0.6768026207480662,0.676681323454516,4373,4373,2722.582,45.376

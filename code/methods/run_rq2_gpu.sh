@@ -4,8 +4,8 @@
 #
 #   cd code/methods && bash run_rq2_gpu.sh
 #
-# EDIT THE FOUR PATHS BELOW. The first points inside this package; the other three point
-# at data the package does not ship (see README.md, "What is included and what is not").
+# EDIT THE FIVE PATHS BELOW. The first points inside this package; the others point at data
+# the package does not ship (see README.md, "What is included and what is not").
 set -uo pipefail
 
 PKG=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)   # the submission/ root
@@ -13,6 +13,7 @@ PY=${PY:-python}                                          # your interpreter
 IMGFLIP_ROOT=/path/to/imgflip-canonical                   # the ImgFlip image tree
 SOCIAL_ROOT=/path/to/social-media                         # the unlabelled discovery corpus
 NONMEME_ROOT=/path/to/non-memes                           # the non-meme corpus
+CKPT_ROOT=/path/to/checkpoints                            # the separately hosted checkpoints
 
 TRAIN=$PKG/data/splits/imgflip_80_20_seed40/train.parquet
 TEST=$PKG/data/splits/imgflip_80_20_seed40/test.parquet
@@ -40,7 +41,7 @@ run() {  # run <name> <command...>
 run two_stage_densenet121 $PY meme_research_two_stage_cnn_eval.py \
   --train-parquet $TRAIN --test-parquet $TEST --random-seed 40 \
   --eval-batch-size 64 --num-workers 8 \
-  --checkpoint-dir $REPO/results/runs/meme_research_two_stage_cnn_eval/20260830_182011_batch/seed_40 \
+  --checkpoint-dir $CKPT_ROOT/meme_research_two_stage_cnn_eval/20260830_182011_batch/seed_40 \
   --open-set-dir $SAMPLE --output-dir $OUT/two_stage_densenet121
 
 # ~15 min: embeds with the seed-40 DenseNet trunk
@@ -48,7 +49,7 @@ run rnn_densenet_embedding $PY meme_research_rnn_densenet_embedding_eval.py \
   --train-parquet $TRAIN --test-parquet $TEST --random-seed 40 --val-size 0.10 \
   --batch-size 64 --num-workers 12 \
   --radius-values 0.1,0.15,0.18,0.2,0.22,0.25,0.3 --weights uniform,distance \
-  --cnn-checkpoint $REPO/results/runs/meme_research_cnn_eval/densenet121/20260818_170124_batch/seed_40/best_model.pt \
+  --cnn-checkpoint $CKPT_ROOT/meme_research_cnn_eval/densenet121/20260818_170124_batch/seed_40/best_model.pt \
   $NONMEME --open-set-dir $SAMPLE --output-dir $OUT/rnn_densenet_embedding
 
 # ~25 min

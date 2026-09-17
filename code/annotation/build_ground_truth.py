@@ -13,7 +13,7 @@ Rules, in the order they are applied:
   3. For images the majority calls templated, the template *name* is the majority among
      the names the templated-voting annotators gave, compared case/hyphen/underscore-
      insensitively, and written in its canonical surface form.
-  4. Ties are resolved from tie_breaks.csv (sample_id, kind, label), a hand adjudication
+  4. Ties are resolved from tie_breaks.csv (sample_id, kind, label), adjudicated by joint
      recorded separately so the raw annotator files stay untouched. A listed image that is
      not actually tied is reported and left to the majority.
 
@@ -46,7 +46,7 @@ def main() -> None:
     ap.add_argument("--keep-unsure", action="store_true",
                     help="leave UNSURE as-is instead of mapping it to template-free")
     ap.add_argument("--tie-breaks", default=str(Path(__file__).parent / "tie_breaks.csv"),
-                    help="hand adjudications for tied images; ignored if the file is absent")
+                    help="adjudications for tied images; ignored if the file is absent")
     args = ap.parse_args()
 
     breaks: dict[str, tuple[str, str]] = {}

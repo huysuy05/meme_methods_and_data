@@ -1,0 +1,87 @@
+{
+  "config": {
+    "dataset_root": null,
+    "parquet_path": null,
+    "train_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/train.parquet",
+    "test_parquet": "/path/to/meme-template-id/splits/imgflip_80_20_seed40/test.parquet",
+    "image_root": null,
+    "output_dir": "/path/to/meme-template-id/results/rq2_final/rnn_phash",
+    "train_size": 0.8,
+    "val_size": 0.1,
+    "min_images_per_class": 7,
+    "random_seed": 40,
+    "radius_values": [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      20,
+      24,
+      32
+    ],
+    "weights": [
+      "uniform",
+      "distance"
+    ],
+    "max_templates": null,
+    "max_images_per_template": null,
+    "path_prefix_from": null,
+    "path_prefix_to": null,
+    "seeds": null,
+    "open_set_dir": "/path/to/meme-template-id/Social_Media/rq2_benchmark_final",
+    "open_set_reject_label": "Template-Free",
+    "open_set_labels": null,
+    "non_meme_root": "/path/to/meme-template-id/non_memes",
+    "max_non_meme_images": 20000
+  },
+  "non_meme_class": {
+    "non_meme_images": 20000,
+    "non_meme_train": 16000,
+    "non_meme_test": 4000
+  },
+  "dataset": {
+    "images_total_after_filtering": 152509,
+    "classes_after_filtering": 1704,
+    "train_images": 138007,
+    "val_images": 13801,
+    "test_images": 34502,
+    "small_class_filtering": {
+      "precomputed_split": true
+    }
+  },
+  "selection": {
+    "best_radius": 12,
+    "best_weights": "distance",
+    "best_val_f1": 0.8936871689360402
+  },
+  "test_metrics": {
+    "accuracy": 0.8731957567677237,
+    "precision": 0.9665511547513588,
+    "recall": 0.8731957567677237,
+    "f1": 0.9000521452867672,
+    "mcc": 0.8792478036076633,
+    "cohen_kappa": 0.8724619352682573,
+    "coverage": 0.9000927482464784,
+    "covered_accuracy": 0.9701175334084688,
+    "covered_count": 31055,
+    "rejected_count": 3447
+  },
+  "open_set": {
+    "images": 1000,
+    "predictions_file": "/path/to/meme-template-id/results/rq2_final/rnn_phash/20260914_165257/open_set_predictions.csv",
+    "class_counts": {
+      "Template-Free": 681,
+      "Templated-Meme": 276,
+      "Non-Meme": 43
+    },
+    "distinct_templates_predicted": 219
+  },
+  "timing": {
+    "started_at": "2026-09-14T16:52:57+02:00",
+    "finished_at": "2026-09-14T17:08:00+02:00",
+    "duration_seconds": 902.726,
+    "duration_minutes": 15.045
+  }
+}

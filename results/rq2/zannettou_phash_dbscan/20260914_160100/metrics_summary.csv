@@ -1,0 +1,2 @@
+run_dir,seed,accuracy,precision,recall,f1,mcc,cohen_kappa,discovered_cluster_count,mapped_cluster_count,duration_seconds,duration_minutes
+/path/to/meme-template-id/results/rq2_final/zannettou_phash_dbscan/20260914_160100,40,0.7289358074880335,0.6656104095624767,0.7289358074880335,0.6774334475762644,0.728804650387304,0.7286762477719968,1976,1976,1205.762,20.096
