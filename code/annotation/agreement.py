@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Inter-annotator agreement for the RQ2 benchmark.
 
-    python agreement.py --annotations-dir ../../data/rq2_benchmark/annotations
+    python agreement.py --annotations-dir "${DATA_ROOT:-../../data}/rq2_benchmark/annotations"
 
 The paper reports Fleiss' kappa over the three-class coding, with an annotator's
 "cannot tell" (UNSURE) mapped to template-free. That is the first row of the output and
@@ -21,10 +21,13 @@ from __future__ import annotations
 import argparse
 import csv
 import itertools
+import os
 from collections import Counter
 from pathlib import Path
 
 CLASSES = ["TEMPLATE", "TEMPLATELESS", "NON_MEME"]
+# The dataset release: $DATA_ROOT if set, otherwise data/ in this package.
+DATA_ROOT = Path(os.environ.get("DATA_ROOT") or Path(__file__).resolve().parent.parent.parent / "data")
 
 
 def fleiss_kappa(items: list[list[str]], categories: list[str]) -> float:
@@ -72,8 +75,7 @@ def report(label: str, items: list[list[str]], categories: list[str]) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    default = Path(__file__).resolve().parent.parent.parent / "data" / "rq2_benchmark" / "annotations"
-    ap.add_argument("--annotations-dir", default=str(default))
+    ap.add_argument("--annotations-dir", default=str(DATA_ROOT / "rq2_benchmark" / "annotations"))
     args = ap.parse_args()
 
     d = Path(args.annotations_dir)

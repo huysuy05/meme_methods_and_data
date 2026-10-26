@@ -9,8 +9,8 @@
     "test_loss": 0.6026518068249038
   },
   "timing": {
-    "started_at": "2026-09-14T16:21:13+02:00",
-    "finished_at": "2026-09-14T16:52:54+02:00",
+    "started_at": "2026-09-14T14:21:13+00:00",
+    "finished_at": "2026-09-14T14:52:54+00:00",
     "duration_seconds": 1900.939,
     "duration_minutes": 31.682
   }

@@ -9,7 +9,7 @@ them from whatever path you unpacked the ImgFlip images to.
 
     python make_templates_root.py \
         --imgflip-root /path/to/imgflip-canonical/images/_filtered_images \
-        --templates-csv ../../data/manifests/imgflip_templates.csv \
+        --templates-csv "${DATA_ROOT:-../../data}/manifests/imgflip_templates.csv" \
         --out ./templates_root
 
 By default it creates symlinks, which costs no disk. Pass ``--copy`` if your filesystem
@@ -28,16 +28,17 @@ import shutil
 from pathlib import Path
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"}
+# The dataset release: $DATA_ROOT if set, otherwise data/ in this package.
+DATA_ROOT = Path(os.environ.get("DATA_ROOT") or Path(__file__).resolve().parent.parent.parent / "data")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--imgflip-root", required=True,
                     help="directory containing one folder per template (…/images/_filtered_images)")
-    default_csv = Path(__file__).resolve().parent.parent.parent / "data" / "manifests" / "imgflip_templates.csv"
-    ap.add_argument("--templates-csv", default=str(default_csv),
+    ap.add_argument("--templates-csv", default=str(DATA_ROOT / "manifests" / "imgflip_templates.csv"),
                     help="manifest listing the templates in the label space "
-                         "(defaults to the copy shipped with this package, regardless of cwd)")
+                         "(defaults to the copy in the dataset release: $DATA_ROOT, else data/ in this package)")
     ap.add_argument("--out", default="./templates_root", help="directory to create")
     ap.add_argument("--copy", action="store_true", help="copy images instead of symlinking")
     ap.add_argument("--max-images", type=int, default=None,

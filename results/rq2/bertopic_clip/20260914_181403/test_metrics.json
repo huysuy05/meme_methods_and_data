@@ -8,8 +8,8 @@
     "cohen_kappa": 0.676681323454516
   },
   "timing": {
-    "started_at": "2026-09-14T18:14:03+02:00",
-    "finished_at": "2026-09-14T18:59:26+02:00",
+    "started_at": "2026-09-14T16:14:03+00:00",
+    "finished_at": "2026-09-14T16:59:26+00:00",
     "duration_seconds": 2722.582,
     "duration_minutes": 45.376
   }

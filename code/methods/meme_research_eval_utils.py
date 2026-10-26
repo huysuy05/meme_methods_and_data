@@ -10,7 +10,7 @@ import time
 import zipfile
 import argparse
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -37,7 +37,7 @@ SOCIAL_MEDIA_SOURCE = "social_media"
 
 
 def now_iso() -> str:
-    return datetime.now().astimezone().isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def parse_int_list(text: str) -> tuple[int, ...]:

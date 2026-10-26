@@ -4,24 +4,31 @@
 #
 #   cd code/methods && bash run_rq2_cpu.sh
 #
-# EDIT THE FOUR PATHS BELOW. The first points inside this package; the other three point
-# at data the package does not ship (see README.md, "What is included and what is not").
+# EDIT THE PATHS BELOW. PKG is this package and DATA_ROOT the unpacked dataset release
+# (data/ inside the package unless DATA_ROOT is set in the environment), which also holds the
+# ImgFlip and social media images. The last one points at data the release does not ship (see
+# README.md, "What is included and what is not").
 set -uo pipefail
 
 PKG=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)   # the submission/ root
+DATA_ROOT=$(cd "${DATA_ROOT:-$PKG/data}" && pwd) || exit  # the dataset release
 PY=${PY:-python}                                          # your interpreter
-IMGFLIP_ROOT=/path/to/imgflip-canonical                   # the ImgFlip image tree
-SOCIAL_ROOT=/path/to/social-media                         # the unlabelled discovery corpus
+IMGFLIP_ROOT=${IMGFLIP_ROOT:-$DATA_ROOT/imgflip}          # the ImgFlip image tree
+SOCIAL_ROOT=${SOCIAL_ROOT:-$DATA_ROOT/social_media}       # the unlabelled discovery corpus
 NONMEME_ROOT=/path/to/non-memes                           # the non-meme corpus
 
-TRAIN=$PKG/data/splits/imgflip_80_20_seed40/train.parquet
-TEST=$PKG/data/splits/imgflip_80_20_seed40/test.parquet
-SAMPLE=$PKG/data/rq2_benchmark/images
+# The parquets store image paths under a placeholder root; every method gets a copy of the
+# seed-40 split that points at $IMGFLIP_ROOT instead.
+SPLITS=$(mktemp -d); trap 'rm -rf "$SPLITS"' EXIT
+$PY "$PKG/code/data_prep/remap_splits.py" --splits "$DATA_ROOT/splits" \
+  --imgflip-root "$IMGFLIP_ROOT" --out "$SPLITS" --seeds 40 || exit
+TRAIN=$SPLITS/imgflip_80_20_seed40/train.parquet
+TEST=$SPLITS/imgflip_80_20_seed40/test.parquet
+SAMPLE=$DATA_ROOT/rq2_benchmark/images
 SOCIAL="$SOCIAL_ROOT/Facebook2023_nolabel,$SOCIAL_ROOT/Reddit2024_nolabel/images,$SOCIAL_ROOT/Twitter2023_nolabel"
 OUT=$PKG/results/rq2
 LOGDIR=$PKG/results/logs
 NONMEME="--non-meme-root $NONMEME_ROOT --max-non-meme-images 20000"
-REMAP="--path-prefix-from /path/to/imgflip-canonical --path-prefix-to $IMGFLIP_ROOT"
 mkdir -p "$OUT" "$LOGDIR"
 export PYTHONWARNINGS="ignore::UserWarning"
 cd "$PKG/code/methods"

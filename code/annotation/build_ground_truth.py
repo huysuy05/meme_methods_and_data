@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Turn the per-annotator CSVs into the RQ2 ground truth the scorer reads.
 
-    python annotations/build_ground_truth.py            # -> annotations/ground_truth.csv
+    python build_ground_truth.py     # ${DATA_ROOT:-../../data}/rq2_benchmark -> ./ground_truth.csv
 
 Rules, in the order they are applied:
 
@@ -28,11 +28,14 @@ from __future__ import annotations
 
 import argparse
 import csv
+import os
 import re
 from collections import Counter
 from pathlib import Path
 
 KIND_TO_LABEL = {"TEMPLATE": "Templated-Meme", "TEMPLATELESS": "Template-Free", "NON_MEME": "Non-Meme"}
+# The dataset release: $DATA_ROOT if set, otherwise data/ in this package.
+DATA_ROOT = Path(os.environ.get("DATA_ROOT") or Path(__file__).resolve().parent.parent.parent / "data")
 
 
 def norm(text: object) -> str:
@@ -41,11 +44,11 @@ def norm(text: object) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--annotations-dir", default=str(Path(__file__).parent / "annotations"))
+    ap.add_argument("--annotations-dir", default=str(DATA_ROOT / "rq2_benchmark" / "annotations"))
     ap.add_argument("--out", default=str(Path(__file__).parent / "ground_truth.csv"))
     ap.add_argument("--keep-unsure", action="store_true",
                     help="leave UNSURE as-is instead of mapping it to template-free")
-    ap.add_argument("--tie-breaks", default=str(Path(__file__).parent / "tie_breaks.csv"),
+    ap.add_argument("--tie-breaks", default=str(DATA_ROOT / "rq2_benchmark" / "tie_breaks.csv"),
                     help="adjudications for tied images; ignored if the file is absent")
     args = ap.parse_args()
 

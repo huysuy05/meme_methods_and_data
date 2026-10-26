@@ -2,7 +2,7 @@
 """Bootstrap intervals for the RQ2 open-set metrics.
 
     python bootstrap_rq2.py --predictions-root ../../results/rq2 \
-        --labels ../../data/rq2_benchmark/ground_truth.csv
+        --labels "${DATA_ROOT:-../../data}/rq2_benchmark/ground_truth.csv"
 
 Resamples the 1,000 benchmark images with replacement B times and recomputes every metric on
 each resample. The reported estimate is the mean over resamples and the interval is the
@@ -17,12 +17,13 @@ Unlike RQ1, there is no seed component here. Every real-world run uses the seed-
 and the LLM is queried per image with no training split at all, so a three-seed interval is
 not available for this setting.
 
-Everything this needs ships with the package.
+Everything this needs ships with the package and the dataset release.
 """
 from __future__ import annotations
 
 import argparse
 import csv
+import os
 from pathlib import Path
 
 import numpy as np
@@ -34,6 +35,8 @@ TEMPLATED = "Templated-Meme"
 BLOCKS = ("overall", "pred_templated", "true_templated")
 TRIPLE = ("f1", "kappa", "mcc")
 BINARY = ("binary_recall", "binary_precision", "binary_f1")
+# The dataset release: $DATA_ROOT if set, otherwise data/ in this package.
+DATA_ROOT = Path(os.environ.get("DATA_ROOT") or Path(__file__).resolve().parent.parent.parent / "data")
 
 
 def coarsen(labels: np.ndarray) -> np.ndarray:
@@ -94,7 +97,7 @@ def binary_scores(true_b, pred_b, W):
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--predictions-root", default="../../results/rq2")
-    ap.add_argument("--labels", default="../../data/rq2_benchmark/ground_truth.csv")
+    ap.add_argument("--labels", default=str(DATA_ROOT / "rq2_benchmark" / "ground_truth.csv"))
     ap.add_argument("--resamples", type=int, default=10000)
     ap.add_argument("--block", type=int, default=1000)
     ap.add_argument("--random-seed", type=int, default=40)

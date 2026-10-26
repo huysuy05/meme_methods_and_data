@@ -12,8 +12,8 @@
     "rejected_count": 1883
   },
   "timing": {
-    "started_at": "2026-09-14T15:35:44+02:00",
-    "finished_at": "2026-09-14T15:38:17+02:00",
+    "started_at": "2026-09-14T13:35:44+00:00",
+    "finished_at": "2026-09-14T13:38:17+00:00",
     "duration_seconds": 152.857,
     "duration_minutes": 2.548
   }

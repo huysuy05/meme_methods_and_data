@@ -1,9 +1,15 @@
-# Meme template identification: code, data and results
+# Meme template identification: code and results
 
 Replication package for the paper on identifying meme templates in curated and real-world
-settings. It contains the evaluation code for all fourteen methods, the dataset splits,
-the annotated 1,000-image real-world benchmark, and the metric files behind every reported
-number.
+settings. It contains the evaluation code for all fourteen methods and the metric files
+behind every reported number. The data is a separate dataset release on Zenodo,
+[doi:10.5281/zenodo.23676782](https://doi.org/10.5281/zenodo.23676782): the ImgFlip images
+and their three partitions, the template inventory, the 1,117,847-image social media corpus
+with predicted labels, and the annotated 1,000-image real-world benchmark.
+[The dataset](#the-dataset) below describes its structure.
+
+The package is anonymous. Annotators appear as `annotator_1` through `annotator_5`, and no
+author names, institutional identifiers or machine paths are present.
 
 ## Layout
 
@@ -14,10 +20,7 @@ submission/
 │   ├── annotation/         annotation front end, ground-truth builder, agreement script
 │   ├── analysis/           bootstrap confidence intervals for RQ1 and RQ2
 │   └── data_prep/          split creation, corpus download, templates_root builder
-├── data/
-│   ├── splits/             the three 80/20 partitions (seeds 40, 41, 42)
-│   ├── rq2_benchmark/      the 1,000-image real-world benchmark and its labels
-│   └── manifests/          the 1,704-template inventory
+├── data/                   the dataset release, downloaded separately (see The dataset)
 └── results/
     ├── rq1_summary.csv     headline closed-set results, one row per method
     ├── rq2_summary.csv     headline real-world results with bootstrap intervals
@@ -26,24 +29,68 @@ submission/
     └── rq2/                per-image open-set predictions and metrics
 ```
 
+## The dataset
+
+The dataset release is one folder, `DATA_ROOT` in the commands below (see Quickstart):
+
+```
+data/
+├── imgflip/images/_filtered_images/
+│   └── <template>/<file>           152,509 ImgFlip images in 1,704 template folders
+├── splits/
+│   └── imgflip_80_20_seed{40,41,42}/{train,test}.parquet
+├── manifests/
+│   ├── imgflip_templates.csv       the 1,704 templates with per-split image counts
+│   └── social_media_images.csv     SHA-256 and size of every released social media file
+├── social_media/
+│   ├── Reddit2024_nolabel/images/  707,137 images
+│   ├── Facebook2023_nolabel/       236,371 images
+│   └── Twitter2023_nolabel/        174,339 images
+├── social_media_luna_v2.csv        one GPT-5.6 Luna template prediction per social media image
+├── rq2_benchmark/
+│   ├── images/                     the 1,000 benchmark images
+│   ├── annotations/                the five annotators' raw judgements
+│   ├── ground_truth.csv            the labels the scorer reads
+│   └── tie_breaks.csv, sample_manifest.csv, model_predictions_shown_to_annotators.csv
+└── README.md                       documentation of every file and column
+```
+
+How the parts connect to the code:
+
+- **`imgflip/` and `splits/`.** Each seed is a stratified 80/20 partition of the same 152,509
+  images, 122,007 for training and 30,502 for test, with all 1,704 templates on both sides.
+  The parquets list each image as `/path/to/imgflip-canonical/images/_filtered_images/...`,
+  where the placeholder root stands for `$DATA_ROOT/imgflip`; Quickstart shows how scripts
+  resolve it.
+- **`social_media/`** is the discovery corpus the clustering methods pool with ImgFlip, the
+  default `SOCIAL_ROOT` of the RQ2 run scripts. The `id` column of `social_media_luna_v2.csv`
+  is each file's path under it; that file's `image_sha256` is the hash of the original file,
+  and `manifests/social_media_images.csv` holds the hash of the file as released.
+- **`rq2_benchmark/`** is the real-world benchmark: `images/` is the `--open-set-dir` of every
+  RQ2 run, and `ground_truth.csv` is what `score_open_set.py` scores against.
+
+Identifying metadata was removed from every image before release; see the notes at the end.
+The dataset's own `README.md` documents each file column by column.
+
 ## What is included and what is not
 
-Included: every script needed to rerun the experiments, the exact dataset partitions, the
-1,000 annotated benchmark images with all five annotators' raw judgements, and the metric
-files for every run reported in the paper.
+Included here: every script needed to rerun the experiments and the metric files for every
+run reported in the paper. In the dataset release: the 152,509 ImgFlip images with their
+exact partitions, the 1,704-template inventory, the 1,117,847-image social media corpus with
+a predicted label for every image, and the 1,000 annotated benchmark images with all five
+annotators' raw judgements.
 
-Not included, and how to obtain each:
+Not included in either, and how to obtain each:
 
 | Missing | Size | How to obtain |
 |---|---|---|
-| ImgFlip template images | 152,509 images | Separate dataset release, cited in the paper. `data/manifests/imgflip_templates.csv` lists the 1,704 template folder names and per-split counts, so a copy can be checked against ours. |
-| Social media discovery corpus | 1,117,847 images | **Not redistributable.** The Reddit portion (707,137) can be rebuilt with `code/data_prep/download_reddit_images.py` from a Pushshift-style submissions parquet, which you must supply. We cannot provide an acquisition path for the Facebook (236,371) and Twitter (174,339) portions, so the four clustering rows cannot be reproduced exactly without them. |
 | Non-meme corpus | 106,296 distinct images | Assembled from Flickr30k (31,783), a UI-screenshot set (66,261) and poster downloads (8,252). Not redistributable. Note that our copy stores the Flickr portion twice, so it holds 138,079 files but 106,296 distinct images; the duplicate copies were not deduplicated before the 20,000-image training draw. |
 | Model checkpoints | 2.5 GB | Hosted separately. Needed only to rescore without retraining. |
 | Per-image closed-set predictions | 285 MB | Hosted separately. The aggregate metrics they produce are in `results/rq1/`. |
 
-The 1,000 benchmark images **are** included, so RQ2 scoring is fully reproducible from
-this package alone.
+With the images in the dataset release, RQ2 scoring and every RQ1 run, the clustering runs
+over the social media corpus included, can be reproduced from this package and the dataset
+release alone. Rerunning the RQ2 methods additionally needs the non-meme corpus.
 
 ### What the benchmark is
 
@@ -65,18 +112,31 @@ python -m venv .venv && ./.venv/bin/pip install -r requirements.txt   # CPU
     --extra-index-url https://pypi.nvidia.com
 ```
 
-The split parquets store absolute image paths under the placeholder root
-`/path/to/imgflip-canonical`. Point the scripts at your copy with:
+The data is not in this package. Download the dataset release from Zenodo,
+[doi:10.5281/zenodo.23676782](https://doi.org/10.5281/zenodo.23676782), into one folder
+laid out as in [The dataset](#the-dataset). Every script finds that folder through
+`DATA_ROOT`; unset, it falls back to `data/` at the package root, so putting the release
+there works too. The commands below spell dataset paths as `$DATA_ROOT/...`, so export it as
+an absolute path first:
 
 ```bash
---path-prefix-from /path/to/imgflip-canonical --path-prefix-to /your/imgflip/root
+export DATA_ROOT=/your/dataset/root     # or $PWD/data from the package root
+```
+
+The split parquets store image paths under the placeholder root
+`/path/to/imgflip-canonical`, which stands for `$DATA_ROOT/imgflip`. Point the scripts at
+the images with:
+
+```bash
+--path-prefix-from /path/to/imgflip-canonical --path-prefix-to "$DATA_ROOT/imgflip"
 ```
 
 Eight scripts accept these flags: the three CNN and MLR classifiers, the two-stage CNN,
 the three `rNN` variants, and the LLM matcher. The three clustering scripts
 (`seed_unsupervised_eval.py`, `bertopic_clip_phash_hdbscan_eval.py`,
-`zannettou_phash_dbscan_eval.py`) do not, so for those either place the images at the
-placeholder path or rewrite the `image_path` column of the parquets first.
+`zannettou_phash_dbscan_eval.py`) do not, so give them remapped copies of the splits
+instead. `python code/data_prep/remap_splits.py --out /tmp/splits` writes all three seeds
+with paths under `$DATA_ROOT/imgflip`, and the RQ2 run scripts do this themselves.
 
 ### What needs a GPU
 
@@ -93,9 +153,9 @@ in the parquet paths.
 
 ```bash
 cd code/methods
-TRAIN="../../data/splits/imgflip_80_20_seed{seed}/train.parquet"
-TEST="../../data/splits/imgflip_80_20_seed{seed}/test.parquet"
-REMAP="--path-prefix-from /path/to/imgflip-canonical --path-prefix-to /your/imgflip/root"
+TRAIN="$DATA_ROOT/splits/imgflip_80_20_seed{seed}/train.parquet"
+TEST="$DATA_ROOT/splits/imgflip_80_20_seed{seed}/test.parquet"
+REMAP="--path-prefix-from /path/to/imgflip-canonical --path-prefix-to $DATA_ROOT/imgflip"
 
 # CNN transfer learning, three backbones
 for B in resnet18 densenet121 efficientnet_v2_s; do
@@ -112,9 +172,7 @@ python meme_research_rnn_phash_eval.py --train-parquet "$TRAIN" --test-parquet "
 ```
 
 The remaining scripts follow the same pattern; run any of them with `--help` for the full
-flag list. `code/methods/README_RQ1.md` and `README_RQ2.md` are the working notes we used
-during development. They contain more detail than this file but also refer in places to an
-earlier directory layout, so treat this README as authoritative where they disagree.
+flag list.
 
 ## Reproducing RQ2, the real world
 
@@ -123,7 +181,8 @@ mechanism rather than a separate gate model.
 
 ```bash
 cd code/methods
-# Edit the five paths at the top of each script first.
+# Set NONMEME_ROOT (and CKPT_ROOT in the GPU script) at the top of each script first;
+# the ImgFlip images, the social media corpus and the benchmark come from $DATA_ROOT.
 bash run_rq2_gpu.sh     # densenet121, two-stage, rNN DenseNet, DBSCAN, both UMAP+HDBSCAN, ours
 bash run_rq2_cpu.sh     # rNN pHash, sparse matching, rNN feature matching
 ```
@@ -136,7 +195,7 @@ produced by querying a hosted model and its predictions ship as
 Then score against the annotated ground truth:
 
 ```bash
-python score_open_set.py --labels ../../data/rq2_benchmark/ground_truth.csv \
+python score_open_set.py --labels "$DATA_ROOT/rq2_benchmark/ground_truth.csv" \
     ../../results/rq2 --table
 ```
 
@@ -146,9 +205,9 @@ From the package root:
 
 ```bash
 python code/annotation/build_ground_truth.py \
-    --annotations-dir data/rq2_benchmark/annotations \
-    --tie-breaks data/rq2_benchmark/tie_breaks.csv \
-    --out data/rq2_benchmark/ground_truth.csv
+    --annotations-dir "$DATA_ROOT/rq2_benchmark/annotations" \
+    --tie-breaks "$DATA_ROOT/rq2_benchmark/tie_breaks.csv" \
+    --out "$DATA_ROOT/rq2_benchmark/ground_truth.csv"
 ```
 
 This regenerates the shipped `ground_truth.csv` byte for byte. An annotator's "cannot
@@ -174,7 +233,7 @@ Both bootstrap procedures reported in the paper live in `code/analysis/`.
 ```bash
 cd code/analysis
 
-# RQ2: resamples the 1,000 benchmark images. Needs nothing beyond this package.
+# RQ2: resamples the 1,000 benchmark images. Needs only this package and the dataset release.
 python bootstrap_rq2.py --reference seed_siglip2_dinov2
 
 # RQ1: two-stage, resampling test images within each seed then combining across the three.
@@ -199,16 +258,16 @@ comparing two marginal intervals.
 
 ```bash
 python code/data_prep/make_templates_root.py \
-    --imgflip-root /your/imgflip/root/images/_filtered_images \
+    --imgflip-root "$DATA_ROOT/imgflip/images/_filtered_images" \
     --out ./templates_root
 
 python code/annotation/annotate.py \
-    --predictions data/rq2_benchmark/model_predictions_shown_to_annotators.csv \
-    --images-root data/rq2_benchmark \
+    --predictions "$DATA_ROOT/rq2_benchmark/model_predictions_shown_to_annotators.csv" \
+    --images-root "$DATA_ROOT/rq2_benchmark" \
     --templates-root ./templates_root
 ```
 
-Note that `--images-root` is `data/rq2_benchmark`, not the `images/` directory inside it,
+Note that `--images-root` is `$DATA_ROOT/rq2_benchmark`, not the `images/` directory inside it,
 because the predictions file already stores paths as `images/<original name>`.
 
 `make_templates_root.py` recreates the per-template example folders the tool shows
@@ -271,9 +330,22 @@ and decoding variance.
 
 **Image metadata has been stripped.** The benchmark images carried IPTC, XMP and EXIF
 blocks containing photographer names, a location, camera serial numbers and platform
-tracking identifiers. These were removed losslessly, so pixel data is unchanged but 343
+tracking identifiers. These were removed losslessly, so pixel data is unchanged but 348
 files differ byte for byte from their originals. `sample_manifest.csv` records both
-`sha256_source` and `sha256_released` for this reason.
+`sha256_source` and `sha256_released` for this reason. The released corpora were treated
+the same way: EXIF, XMP, IPTC and comment blocks and PNG text chunks were removed from
+220,564 social media images, most of them Facebook images carrying IPTC blocks, and from
+241 ImgFlip images, keeping colour profiles. Every rewritten file decodes to exactly the
+original's pixels. Fifteen corpus entries that were never images (14 saved web pages and one
+empty file) ship as empty files. `social_media_luna_v2.csv` keeps the original hashes, and
+`manifests/social_media_images.csv` lists the released ones.
+
+**Corpus copies of benchmark images.** Each RQ2 run removes its open-set sample from the
+discovery corpus by SHA-256. The 18,621 corpus files that were byte-identical to a benchmark
+original are released byte-identical to `rq2_benchmark/images/`, so a rerun removes them as
+our runs did. Removing metadata also made 1,349 Facebook re-uploads of two benchmark images,
+which differed only in platform metadata, identical to them, so a rerun removes those too;
+our runs kept them in the corpus.
 
 **Images keep their original file names.** Each benchmark image is stored under the name
 it had in its source corpus rather than a sequential identifier, so provenance is visible

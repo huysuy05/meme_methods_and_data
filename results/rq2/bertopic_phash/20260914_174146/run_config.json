@@ -81,8 +81,8 @@
     "distinct_templates_predicted": 237
   },
   "timing": {
-    "started_at": "2026-09-14T17:41:46+02:00",
-    "finished_at": "2026-09-14T18:13:56+02:00",
+    "started_at": "2026-09-14T15:41:46+00:00",
+    "finished_at": "2026-09-14T16:13:56+00:00",
     "duration_seconds": 1929.857,
     "duration_minutes": 32.164
   }

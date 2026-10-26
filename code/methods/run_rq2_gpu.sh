@@ -4,25 +4,32 @@
 #
 #   cd code/methods && bash run_rq2_gpu.sh
 #
-# EDIT THE FIVE PATHS BELOW. The first points inside this package; the others point at data
-# the package does not ship (see README.md, "What is included and what is not").
+# EDIT THE PATHS BELOW. PKG is this package and DATA_ROOT the unpacked dataset release
+# (data/ inside the package unless DATA_ROOT is set in the environment), which also holds the
+# ImgFlip and social media images. The last two point at data the release does not ship (see
+# README.md, "What is included and what is not").
 set -uo pipefail
 
 PKG=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)   # the submission/ root
+DATA_ROOT=$(cd "${DATA_ROOT:-$PKG/data}" && pwd) || exit  # the dataset release
 PY=${PY:-python}                                          # your interpreter
-IMGFLIP_ROOT=/path/to/imgflip-canonical                   # the ImgFlip image tree
-SOCIAL_ROOT=/path/to/social-media                         # the unlabelled discovery corpus
+IMGFLIP_ROOT=${IMGFLIP_ROOT:-$DATA_ROOT/imgflip}          # the ImgFlip image tree
+SOCIAL_ROOT=${SOCIAL_ROOT:-$DATA_ROOT/social_media}       # the unlabelled discovery corpus
 NONMEME_ROOT=/path/to/non-memes                           # the non-meme corpus
 CKPT_ROOT=/path/to/checkpoints                            # the separately hosted checkpoints
 
-TRAIN=$PKG/data/splits/imgflip_80_20_seed40/train.parquet
-TEST=$PKG/data/splits/imgflip_80_20_seed40/test.parquet
-SAMPLE=$PKG/data/rq2_benchmark/images
+# The parquets store image paths under a placeholder root; every method gets a copy of the
+# seed-40 split that points at $IMGFLIP_ROOT instead.
+SPLITS=$(mktemp -d); trap 'rm -rf "$SPLITS"' EXIT
+$PY "$PKG/code/data_prep/remap_splits.py" --splits "$DATA_ROOT/splits" \
+  --imgflip-root "$IMGFLIP_ROOT" --out "$SPLITS" --seeds 40 || exit
+TRAIN=$SPLITS/imgflip_80_20_seed40/train.parquet
+TEST=$SPLITS/imgflip_80_20_seed40/test.parquet
+SAMPLE=$DATA_ROOT/rq2_benchmark/images
 SOCIAL="$SOCIAL_ROOT/Facebook2023_nolabel,$SOCIAL_ROOT/Reddit2024_nolabel/images,$SOCIAL_ROOT/Twitter2023_nolabel"
 OUT=$PKG/results/rq2
 LOGDIR=$PKG/results/logs
 NONMEME="--non-meme-root $NONMEME_ROOT --max-non-meme-images 20000"
-REMAP="--path-prefix-from /path/to/imgflip-canonical --path-prefix-to $IMGFLIP_ROOT"
 mkdir -p "$OUT" "$LOGDIR"
 export PYTHONWARNINGS="ignore::UserWarning"
 cd "$PKG/code/methods"
@@ -73,7 +80,7 @@ done
 # ~50 min: single-stage DenseNet-121. Trains its own head with Non-Meme as class 1,705,
 # then demotes low-confidence template predictions to Template-Free at a fixed 0.7 cut-off.
 run densenet121 $PY meme_research_cnn_eval.py \
-  --train-parquet $TRAIN --test-parquet $TEST --random-seed 40 $REMAP \
+  --train-parquet $TRAIN --test-parquet $TEST --random-seed 40 \
   --model-name densenet121 --batch-size 32 --eval-batch-size 64 --num-workers 12 \
   --learning-rate 2e-4 --epochs 10 --patience 2 --val-size 0.1 \
   --template-confidence-threshold 0.7 \
@@ -82,7 +89,7 @@ run densenet121 $PY meme_research_cnn_eval.py \
 # ~3 h: the proposed method. Clusters ImgFlip together with the unlabelled social corpus,
 # names clusters by majority vote over their labelled members, and rejects unnamed ones.
 run seed_siglip2_dinov2 $PY seed_unsupervised_eval.py \
-  --train-parquet $TRAIN --test-parquet $TEST --random-seed 40 $REMAP \
+  --train-parquet $TRAIN --test-parquet $TEST --random-seed 40 \
   --discovery-extra-roots "$SOCIAL" $NONMEME \
   --siglip-model-id google/siglip2-base-patch16-224 --dino-model-id facebook/dinov2-base \
   --alpha 0.55 --reducer pca --reducer-dim 128 --cluster-method hdbscan \
