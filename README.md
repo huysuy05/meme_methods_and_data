@@ -112,12 +112,13 @@ python -m venv .venv && ./.venv/bin/pip install -r requirements.txt   # CPU
     --extra-index-url https://pypi.nvidia.com
 ```
 
-The data is not in this package. Download the dataset release from Zenodo,
-[doi:10.5281/zenodo.23676782](https://doi.org/10.5281/zenodo.23676782), into one folder
-laid out as in [The dataset](#the-dataset). Every script finds that folder through
-`DATA_ROOT`; unset, it falls back to `data/` at the package root, so putting the release
-there works too. The commands below spell dataset paths as `$DATA_ROOT/...`, so export it as
-an absolute path first:
+The data is not in this package. Download the eight zip archives of the dataset release
+from Zenodo, [doi:10.5281/zenodo.23676782](https://doi.org/10.5281/zenodo.23676782), and
+unzip them all into one folder; together they give the layout in
+[The dataset](#the-dataset), and the dataset's README lists them. Every script finds that
+folder through `DATA_ROOT`; unset, it falls back to `data/` at the package root, so putting
+the release there works too. The commands below spell dataset paths as `$DATA_ROOT/...`, so
+export it as an absolute path first:
 
 ```bash
 export DATA_ROOT=/your/dataset/root     # or $PWD/data from the package root
